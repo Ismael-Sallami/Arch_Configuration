@@ -1,0 +1,43 @@
+#compdef texdoc
+
+__texdoc() {
+  local options=(
+    "(- : *)"{-h,--help}"[Print this help message.]"
+    "(- : *)"{-V,--version}"[Print the version number.]"
+    "(- : *)"{-f,--files}"[Print the list of configuration files used.]"
+    "(- : *)"--just-view"[Display FILE, given with full path (no searching).]: :_files"
+    "(- : *)"--print-completion"[Print SHELL completion.]:shell:(zsh)"
+    + mode
+    "(mode)"{-w,--view}"[Use view mode: start a viewer. (default)]"
+    "(mode)"{-m,--mixed}"[Use mixed mode (view or list).]"
+    "(mode)"{-l,--list}"[Use list mode: show a list of results.]"
+    "(mode)"{-s,--showall}"[Use showall mode: show also "bad" results.]"
+    + interaction
+    "(interaction)"{-i,--interact}"[Use interactive menus. (default)]"
+    "(interaction)"{-I,--nointeract}"[Use plain lists, no interaction required.]"
+    "(interaction)"{-M,--machine}"[Machine-readable output for lists (implies -I).]"
+    + debug
+    "(debug)"{-q,--quiet}"[Suppress warnings and most error messages.]"
+    "(debug)"{-v,--verbose}"[Print additional information (e.g., viewer command).]"
+    "(debug)"-D"[Activate all debug output (equal to "--debug=all").]"
+    "(debug)"{-d,--debug=-}"[Activate debug output restricted to LIST.]:list:(view config files texdocs version search score tlpdb)"
+    "(debug)"-c"[Set configuration item NAME to VALUE.]:name=value:(viewer_ mode interact_switch machine_switch ext_list basename_list badext_list badbasename_list suffix_list verbosity_level debug_list lastfile_switch rm_dir rm_file unzip_ zipext_list max_lines lang fuzzy_level texlive_tlpdb online_url)"
+  )
+  _arguments -C -A $options \
+    '*: :->arguments' && return
+  case $state in
+    arguments)
+      local tlpdb="$(kpsewhich -var-value TEXMFROOT)/tlpkg/texlive.tlpdb"
+      _values package $(awk '/^name[^.]*$/ {print $2}' $tlpdb)
+    ;;
+  esac
+}
+
+if [[ $zsh_eval_context[-1] == loadautofunc ]]; then
+  # autoload from fpath, call function directly
+  __texdoc "$@"
+else
+  # eval/source/. command, register function for later
+  compdef __texdoc texdoc
+fi
+

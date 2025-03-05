@@ -1,0 +1,18 @@
+#!/bin/sh
+
+decrease_brightness() {    
+    light -U 5   # Disminuir el brillo en 5 unidades si es mayor a 5.00
+    brightness=$(light -G)
+    dunstify -a "Brillo" "Bajando a ${brightness}%" -h int:value:"$brightness" -i /home/jose/.config/scripts/icons/brightness.svg -r 2593 -u normal
+}
+
+increase_brightness() {
+    light -A 5   # Aumenta el brillo en 5 unidades (ajusta según tus preferencias)
+    brightness=$(light -G)
+    dunstify -a "Brillo" "Subiendo a ${brightness}%" -h int:value:"$brightness" -i /home/jose/.config/scripts/icons/brightness.svg -r 2593 -u normal
+}
+
+case "$1" in
+    up) increase_brightness;;
+    down) decrease_brightness;;
+esac

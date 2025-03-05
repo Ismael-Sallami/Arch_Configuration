@@ -1,0 +1,173 @@
+* {
+  border: none;
+  border-radius: 0;
+  font-family: "JetBrainsMono Nerd Font";
+  font-weight: bold;
+  font-size: 16px;
+  min-height: 0;
+}
+
+window#waybar {
+  background: none;
+  color: #cdd6f4;
+}
+
+tooltip {
+  background: #1e1e2e;
+  opacity: 0.8;
+  border-radius: 10px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #11111b;
+}
+
+tooltip label {
+  color: #cdd6f4;
+}
+
+#workspaces button {
+  padding: 2px;
+  color: #558;
+  /* color: #313244; */
+  margin: 2px;
+  border-radius: 10px;
+}
+
+#workspaces button.active {
+  background: #cdd6f4;
+  color: #000;
+}
+
+#workspaces button.active:hover {
+  background: #cdd6f4;
+  color: #000;
+}
+
+#workspaces button.focused {
+  color: #cdd6f4;
+  background: #eba0ac;
+}
+
+#workspaces button.urgent {
+  color: #11111b;
+  background: #a6e3a1;
+}
+
+#workspaces button:hover {
+  background: #1e1e2e;
+  color: #cdd6f4;
+}
+
+#custom-launch_wofi,
+#custom-lock_screen,
+#custom-power_btn,
+#custom-weather,
+#custom-media,
+#custom-wf-recorder,
+#custom-notification,
+#cpu,
+#disk,
+#memory,
+#clock,
+#battery,
+#pulseaudio,
+#network,
+#tray,
+#temperature,
+#workspaces,
+#backlight {
+  background: #1e1e2e;
+  opacity: 0.8;
+  padding: 0px 10px;
+  margin: 3px 0px;
+  margin-top: 3px;
+  border: 0px;
+  border-radius: 0px;
+}
+
+/* with rounded left */
+/* #tray, */
+#battery,
+#custom-launch_wofi,
+#clock,
+#custom-media,
+#pulseaudio:not(.microphone),
+#cpu {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+/* with roudned right */
+/* #pulseaudio.microphone, */
+#custom-power_btn,
+#workspaces,
+#tray,
+#clock,
+#custom-media,
+#network {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  margin-right: 5px;
+}
+
+/* Start overrides */
+
+#workspaces {
+  padding-right: 0px;
+  padding-left: 3px;
+}
+
+#battery.warning {
+  animation: warning-animation 1s steps(5, start) infinite;
+  -webkit-animation: warning-animation 1s steps(5, start) infinite;
+}
+
+#battery.critical,
+#temperature.critical {
+  animation: error-animation 1s steps(5, start) infinite;
+  -webkit-animation: error-animation 1s steps(5, start) infinite;
+}
+
+#battery.plugged,
+#battery.charging {
+  color: #00a000;
+  animation: none;
+}
+
+#custom-launch_wofi {
+  color: #89b4fa;
+  border-right: 0px;
+}
+
+#custom-wf-recorder {
+  color: red;
+}
+
+#custom-weather {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+#custom-weather.unavailable {
+  color: red;
+}
+
+#custom-launch_wofi {
+    margin-left: 5px;
+    margin-right: 0px;
+}
+
+@keyframes error-animation {
+  to {
+    color: #ffffff;
+    background-color: red;
+  }
+}
+@keyframes warning-animation {
+  to {
+    color: #ffffff;
+    background-color: orange;
+  }
+}

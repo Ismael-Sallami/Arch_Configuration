@@ -1,0 +1,58 @@
+#compdef tlp
+# Copyright (c) 2022 Arvid Norlander and others.
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+# Helper to find installed batteries. Avoid a generic name since this is
+# going into the global scope.
+_tlp_batteries() {
+    local -a bats
+    for b in /sys/class/power_supply/*; do
+        if [[ ! $b =~ hid \
+                && -f $b/present && "$(< $b/present)" == "1" \
+                && "$(< $b/type)" = "Battery" ]]; then
+            bats+=("${b##/*/}[Battery ${b##/*/}]")
+        fi
+    done
+    if [[ -n "$bats" ]]; then
+        _values "battery" $bats
+    else
+        _message "battery (none found)"
+    fi
+}
+
+# Extra helper hoop required when using _regex_words below
+local -a subcmd_batteries
+subcmd_batteries=(/$'[^\0]##\0'/ ':battery:battery:_tlp_batteries')
+
+local -a subcmd_setcharge
+subcmd_setcharge=(
+    /$'[0-9]##\0'/ ':number:start charge threshold: '
+    /$'[0-9]##\0'/ ':number:stop charge threshold: '
+    /$'[^\0]##\0'/ ':battery:battery:_tlp_batteries'
+)
+
+local -a reply
+
+local -a args
+args=(
+    # Command word.  Don't care what that is.
+    /$'[^\0]#\0'/
+)
+
+_regex_words commands 'tlp command' \
+    'start:Start TLP and apply power saving profile for the actual power source' \
+    'bat:Apply battery profile and enter manual mode' \
+    'ac:Apply AC profile and enter manual mode' \
+    'usb:Enable autosuspend for all USB devices except excluded' \
+    'bayoff:Turn off optical drive in UltraBay/MediaBay' \
+    'chargeonce:Charge battery to the stop charge threshold once (ThinkPads only):$subcmd_batteries' \
+    'discharge:Force a complete discharge of the battery (ThinkPads only):$subcmd_batteries' \
+    'setcharge:Change charge thresholds temporarily:$subcmd_setcharge' \
+    'fullcharge:Charge battery to full capacity:$subcmd_batteries' \
+    'recalibrate:Perform a battery recalibration (ThinkPads only):$subcmd_batteries' \
+    'diskid:Print disk ids for configured drives' \
+    '--version:Print TLP version'
+args+=("$reply[@]")
+
+_regex_arguments _tlp "$args[@]"
+_tlp "$@"

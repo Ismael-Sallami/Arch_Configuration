@@ -1,0 +1,29 @@
+#compdef tlp-stat
+# Copyright (c) 2022 Arvid Norlander and others.
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+local -a args
+args=(
+    '(-b --battery)'{--battery,-b}'[View battery data]'
+    '(-c --config)'{--config,-c}'[View active configuration]'
+    '--cdiff[View difference between defaults and user configuration]'
+    '(-d --disk)'{--disk,-d}'[View disk device information]'
+    '(-e --pcie)'{--pcie,-e}'[View PCIe device information]'
+    '(-g --graphics)'{--graphics,-g}'[View graphics card information]'
+    '(-m --mode)'{--mode,-m}'[Print current power mode]'
+    '(-p --processor)'{--processor,-p}'[View processor information]'
+    '(-q --quiet)'{--quiet,-q}'[Show less information]'
+    '(-r --rfkill)'{--rfkill,-r}'[View radio device states]'
+    '(-s --system)'{--system,-s}'[View system information and TLP status]'
+    '(-t --temp)'{--temp,-t}'[View temperatures and fan speed]'
+    '(-u --usb)'{--usb,-u}'[View USB device information]'
+    '(-v --verbose)'{--verbose,-v}'[Show more information]'
+    '--version[Print TLP version]'
+    '(-P --pev)'{--pev,-P}'[Monitor power supply udev events]'
+    '--psup[View power supply diagnostics]'
+    '(-T --trace)'{--trace,-T}'[View trace output]'
+    '--udev[Check if udev rules for power source changes and connecting USB devices are active]'
+    '(-w --warn)'{--warn,-w}'[View warnings about SATA disks]'
+)
+
+_arguments $args

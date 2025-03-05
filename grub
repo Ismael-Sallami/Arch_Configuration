@@ -1,0 +1,6 @@
+GRUB_THEME="/boot/grub/themes/CyberRe/theme.txt"
+GRUB_GFXMODE=1920x1080x32
+#GRUB_CMDLINE_LINUX_DEFAULT="quiet splash acpi_backlight=vendor nvidia-drm.modeset=1 amdgpu.modeset=0 nvidia.NVreg_RegistryDwords=EnableBrightnessControl=1 acpi_backlight=video nvidia.NVreg_EnableBacklightHandler=1 pcie_aspm=force acpi_backlight=native"
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+
+
